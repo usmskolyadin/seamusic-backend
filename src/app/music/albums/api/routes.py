@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from fastapi import APIRouter, Depends, status
 
 from src.app.music.albums.api.utils import CurrentUser, get_current_user
-from src.app.music.albums.core.service import get_service as get_albums_service
+from src.app.music.albums.core.service import get_service
 from src.domain.music.albums.api.routes import BaseRouter
 from src.domain.music.albums.core.service import BaseService
 from src.presentation.albums.schemas import (
@@ -27,10 +27,6 @@ from src.presentation.albums.schemas import (
 )
 
 router_v1 = APIRouter(prefix='/albums')
-
-
-def get_service() -> BaseService:
-    return get_albums_service()
 
 
 @dataclass
