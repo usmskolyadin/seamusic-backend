@@ -7,10 +7,7 @@ __pycache__/
 db/
 
 # Unit test / coverage reports
-coverage/
 .coverage
-.coverage.*
-*.cover
 .pytest_cache/
 
 # Translations
@@ -20,8 +17,8 @@ coverage/
 # pyenv
 .python-version
 
-# poetry
-poetry.lock
+# UV
+uv.lock
 
 # Environments
 .env
@@ -39,6 +36,3 @@ dmypy.json
 
 # Qodana
 qodana.yaml
-
-# Running
-Makefile
