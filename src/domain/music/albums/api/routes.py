@@ -15,7 +15,8 @@ from src.domain.music.albums.api.schemas import (
     BaseSUpdateAlbumRequest,
     BaseSUpdateAlbumResponse,
     BaseSDeleteAlbumRequest,
-    BaseSUnlikeAlbumRequest, BaseCurrentUser,
+    BaseSUnlikeAlbumRequest,
+    BaseCurrentUser,
 )
 from src.domain.music.albums.core.service import BaseService
 
