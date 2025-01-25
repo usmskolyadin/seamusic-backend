@@ -40,7 +40,7 @@ services:
 
 
   pgadmin:
-    container_name: sm_pgadmin_app
+    container_name: pgadmin
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: 'user@example.com'
