@@ -14,11 +14,9 @@ db/
 *.mo
 *.pot
 
-# pyenv
-.python-version
-
 # UV
 uv.lock
+.python-version
 
 # Environments
 .env
