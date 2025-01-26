@@ -1,8 +1,9 @@
+from dataclasses import dataclass
 from datetime import date, datetime
 from typing import Literal
 
 from fastapi import UploadFile
-from pydantic import BaseModel, EmailStr
+from pydantic import EmailStr
 
 from src.domain.music.albums.api.schemas import (
     BaseSUser,
@@ -27,7 +28,8 @@ from src.domain.music.albums.api.schemas import (
 )
 
 
-class SUser(BaseSUser, BaseModel):
+@dataclass
+class SUser(BaseSUser):
     id: int
     username: str
     description: str | None = None
@@ -46,7 +48,8 @@ class SUser(BaseSUser, BaseModel):
     updated_at: datetime
 
 
-class SArtist(BaseSArtist, BaseModel):
+@dataclass
+class SArtist(BaseSArtist):
     id: int
     username: str
     description: str | None = None
@@ -54,7 +57,8 @@ class SArtist(BaseSArtist, BaseModel):
     user_id: int
 
 
-class STrack(BaseSTrack, BaseModel):
+@dataclass
+class STrack(BaseSTrack):
     id: int
     title: str
     description: str | None
@@ -67,16 +71,19 @@ class STrack(BaseSTrack, BaseModel):
     updated_at: datetime
 
 
-class SItemsRequest(BaseSItemsRequest, BaseModel):
+@dataclass
+class SItemsRequest(BaseSItemsRequest):
     start: int = 1
     size: int = 10
 
 
-class SAlbumRequest(BaseSAlbumRequest, BaseModel):
+@dataclass
+class SAlbumRequest(BaseSAlbumRequest):
     album_id: int
 
 
-class SAlbumResponse(BaseSAlbumResponse, BaseModel):
+@dataclass
+class SAlbumResponse(BaseSAlbumResponse):
     id: int
     title: str
     picture_url: str | None
@@ -93,7 +100,8 @@ class SAlbumResponse(BaseSAlbumResponse, BaseModel):
     tags: list[str]
 
 
-class SAlbumItemResponse(BaseSAlbumItemResponse, BaseModel):
+@dataclass
+class SAlbumItemResponse(BaseSAlbumItemResponse):
     id: int
     title: str
     picture_url: str | None
@@ -106,7 +114,8 @@ class SAlbumItemResponse(BaseSAlbumItemResponse, BaseModel):
     updated_at: datetime
 
 
-class SPopularAlbumsResponse(BaseSPopularAlbumsResponse, BaseModel):
+@dataclass
+class SPopularAlbumsResponse(BaseSPopularAlbumsResponse):
     total: int
     page: int
     has_next: bool
@@ -115,43 +124,52 @@ class SPopularAlbumsResponse(BaseSPopularAlbumsResponse, BaseModel):
     items: list[SAlbumItemResponse]
 
 
-class SCountAlbumsResponse(BaseSCountAlbumsResponse, BaseModel):
+@dataclass
+class SCountAlbumsResponse(BaseSCountAlbumsResponse):
     amount: int
 
 
-class SArtistAlbumsRequest(BaseSArtistAlbumsRequest, BaseModel):
+@dataclass
+class SArtistAlbumsRequest(BaseSArtistAlbumsRequest):
     artist_id: int
 
 
-class SArtistAlbumsResponse(BaseSArtistAlbumsResponse, BaseModel):
+@dataclass
+class SArtistAlbumsResponse(BaseSArtistAlbumsResponse):
     total: int
     items: list[SAlbumItemResponse]
 
 
-class SLikeAlbumRequest(BaseSLikeAlbumRequest, BaseModel):
+@dataclass
+class SLikeAlbumRequest(BaseSLikeAlbumRequest):
     album_id: int
 
 
-class SUnlikeAlbumRequest(BaseSUnlikeAlbumRequest, BaseModel):
+@dataclass
+class SUnlikeAlbumRequest(BaseSUnlikeAlbumRequest):
     album_id: int
 
 
-class SUpdateAlbumCoverRequest(BaseSUpdateAlbumCoverRequest, BaseModel):
+@dataclass
+class SUpdateAlbumCoverRequest(BaseSUpdateAlbumCoverRequest):
     album_id: int
     file: UploadFile
 
 
-class SCreateAlbumRequest(BaseSCreateAlbumRequest, BaseModel):
+@dataclass
+class SCreateAlbumRequest(BaseSCreateAlbumRequest):
     title: str
     description: str | None
     tags: list[str]
 
 
-class SCreateAlbumResponse(BaseSCreateAlbumResponse, BaseModel):
+@dataclass
+class SCreateAlbumResponse(BaseSCreateAlbumResponse):
     id: int
 
 
-class SUpdateAlbumRequest(BaseSUpdateAlbumRequest, BaseModel):
+@dataclass
+class SUpdateAlbumRequest(BaseSUpdateAlbumRequest):
     id: int
     title: str | None = None
     picture_url: str | None = None
@@ -162,9 +180,11 @@ class SUpdateAlbumRequest(BaseSUpdateAlbumRequest, BaseModel):
     tags: list[str] | None = None
 
 
-class SUpdateAlbumResponse(BaseSUpdateAlbumResponse, BaseModel):
+@dataclass
+class SUpdateAlbumResponse(BaseSUpdateAlbumResponse):
     id: int
 
 
-class SDeleteAlbumRequest(BaseSDeleteAlbumRequest, BaseModel):
+@dataclass
+class SDeleteAlbumRequest(BaseSDeleteAlbumRequest):
     album_id: int
