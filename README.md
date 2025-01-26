@@ -76,7 +76,7 @@ make downgrade revision=<revision identificator>
 
 ### 🤝 Contributing
 
-The project is not open for open-source contributions
+The project is closed for open-source contributions
 
 ### 📜 License
 
