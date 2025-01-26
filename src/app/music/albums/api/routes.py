@@ -6,7 +6,7 @@ from src.app.music.albums.api.utils import CurrentUser, get_current_user
 from src.app.music.albums.core.service import get_service
 from src.domain.music.albums.api.routes import BaseRouter
 from src.domain.music.albums.core.service import BaseService
-from src.presentation.albums.schemas import (
+from src.presentation.music.albums.schemas import (
     SAlbumRequest,
     SAlbumResponse,
     SArtist,
@@ -31,6 +31,7 @@ router_v1 = APIRouter(prefix='/albums')
 
 @dataclass
 class Router(BaseRouter):
+    @staticmethod
     @router_v1.get(
         path='/{album_id}',
         summary='Get an album by it\'s id',
@@ -38,7 +39,6 @@ class Router(BaseRouter):
         status_code=status.HTTP_200_OK,
     )
     async def get_album(  # type: ignore[override]
-        self,
         request: SAlbumRequest = Depends(SAlbumRequest),
         service: BaseService = Depends(get_service),
         current_user: CurrentUser = Depends(get_current_user),
@@ -81,6 +81,7 @@ class Router(BaseRouter):
             tags=list(album.tags),
         )
 
+    @staticmethod
     @router_v1.get(
         path='/',
         summary='Get popular albums',
@@ -88,7 +89,6 @@ class Router(BaseRouter):
         status_code=status.HTTP_200_OK,
     )
     async def get_popular_albums(  # type: ignore[override]
-        self,
         page: SItemsRequest = Depends(SItemsRequest),
         service: BaseService = Depends(get_service),
         current_user: CurrentUser = Depends(get_current_user),
@@ -116,6 +116,7 @@ class Router(BaseRouter):
             ))
         )
 
+    @staticmethod
     @router_v1.get(
         path='/artist/{artist_id}',
         summary='Get albums made by specified artist',
@@ -123,7 +124,6 @@ class Router(BaseRouter):
         status_code=status.HTTP_200_OK,
     )
     async def get_artist_albums(  # type: ignore[override]
-        self,
         request: SArtistAlbumsRequest = Depends(SArtistAlbumsRequest),
         service: BaseService = Depends(get_service),
     ) -> SArtistAlbumsResponse:
@@ -146,13 +146,13 @@ class Router(BaseRouter):
             )),
         )
 
+    @staticmethod
     @router_v1.put(
         path='/{album_id}/cover',
         summary='Update an album cover',
         status_code=status.HTTP_202_ACCEPTED,
     )
     async def update_cover(  # type: ignore[override]
-        self,
         request: SUpdateAlbumCoverRequest = Depends(SUpdateAlbumCoverRequest),
         service: BaseService = Depends(get_service),
         current_user: CurrentUser = Depends(get_current_user),
@@ -163,13 +163,13 @@ class Router(BaseRouter):
             data=await request.file.read()
         )
 
+    @staticmethod
     @router_v1.patch(
         path='/{album_id}/like',
         summary='Like an album',
         status_code=status.HTTP_202_ACCEPTED,
     )
     async def like_album(  # type: ignore[override]
-        self,
         request: SLikeAlbumRequest = Depends(SLikeAlbumRequest),
         service: BaseService = Depends(get_service),
         current_user: CurrentUser = Depends(get_current_user),
@@ -179,13 +179,13 @@ class Router(BaseRouter):
             album_id=request.album_id,
         )
 
+    @staticmethod
     @router_v1.patch(
         path='/{album_id}/unlike',
         summary='Unlike an album',
         status_code=status.HTTP_202_ACCEPTED,
     )
     async def unlike_album(  # type: ignore[override]
-        self,
         request: SUnlikeAlbumRequest = Depends(SLikeAlbumRequest),
         service: BaseService = Depends(get_service),
         current_user: CurrentUser = Depends(get_current_user),
@@ -195,6 +195,7 @@ class Router(BaseRouter):
             album_id=request.album_id,
         )
 
+    @staticmethod
     @router_v1.post(
         path='/new',
         summary='Create a new album',
@@ -202,7 +203,6 @@ class Router(BaseRouter):
         status_code=status.HTTP_201_CREATED,
     )
     async def create_album(  # type: ignore[override]
-        self,
         request: SCreateAlbumRequest = Depends(SCreateAlbumRequest),
         service: BaseService = Depends(get_service),
         current_user: CurrentUser = Depends(get_current_user),
@@ -215,6 +215,7 @@ class Router(BaseRouter):
         )
         return SCreateAlbumResponse(id=response.id)
 
+    @staticmethod
     @router_v1.put(
         path='/{album_id}',
         summary='Update an album',
@@ -222,7 +223,6 @@ class Router(BaseRouter):
         status_code=status.HTTP_201_CREATED,
     )
     async def update_album(  # type: ignore[override]
-        self,
         request: SUpdateAlbumRequest = Depends(SUpdateAlbumRequest),
         service: BaseService = Depends(get_service),
         current_user: CurrentUser = Depends(get_current_user),
@@ -238,13 +238,13 @@ class Router(BaseRouter):
         )
         return SUpdateAlbumResponse(id=response.id)
 
+    @staticmethod
     @router_v1.delete(
         path='/{album_id}',
         summary='Delete an album',
         status_code=status.HTTP_202_ACCEPTED,
     )
     async def delete_album(  # type: ignore[override]
-        self,
         request: SDeleteAlbumRequest = Depends(SDeleteAlbumRequest),
         service: BaseService = Depends(get_service),
         current_user: CurrentUser = Depends(get_current_user),
