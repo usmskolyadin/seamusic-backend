@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from dataclasses import dataclass
 
 from src.domain.music.albums.api.schemas import BaseCurrentUser
 
@@ -6,7 +6,8 @@ from src.domain.music.albums.api.schemas import BaseCurrentUser
 # from src.domain.auth.users.core.service import BaseService
 
 
-class CurrentUser(BaseCurrentUser, BaseModel):
+@dataclass
+class CurrentUser(BaseCurrentUser):
     id: int
 
 
