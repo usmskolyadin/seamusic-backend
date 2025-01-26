@@ -1,5 +1,5 @@
 install:
-	uv install
+	uv venv --python 3.11.11
 
 run-local:
 	uv run alembic upgrade head
