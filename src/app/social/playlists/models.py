@@ -3,8 +3,7 @@ from datetime import date, datetime
 from sqlalchemy import Table, ForeignKey, Column
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
-from src.infrastructure.postgres import Base, Sequence
-from src.app.base import SocialActionExtend, CreateUpdateExtend
+from src.infrastructure.postgres import Base, IntegerArray
 
 playlists_to_beat_association = Table(
     "playlists_to_beat_association",
@@ -35,7 +34,7 @@ author_to_playlists_association = Table(
 )
 
 
-class Playlist(Base, SocialActionExtend, CreateUpdateExtend):
+class Playlist(Base):
     __tablename__ = 'playlists'
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -43,6 +42,11 @@ class Playlist(Base, SocialActionExtend, CreateUpdateExtend):
     description: Mapped[str | None]
     picture_url: Mapped[str | None]
 
+    viewers_ids: IntegerArray
+    likers_ids: IntegerArray
+
+    created_at: Mapped[date]
+    updated_at: Mapped[datetime]
 
     authors: Mapped[list["User"]] = relationship(secondary=author_to_playlists_association)   # type: ignore[name-defined]  # noqa: F821
     beats: Mapped[list["Beat"]] = relationship(secondary=playlists_to_beat_association)   # type: ignore[name-defined]  # noqa: F821

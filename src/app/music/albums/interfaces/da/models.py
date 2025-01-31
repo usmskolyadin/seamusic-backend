@@ -5,8 +5,7 @@ from sqlalchemy import Column, Table, ForeignKey, ARRAY
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from src.domain.music.albums.interfaces.da.models import BaseAlbumModel
-from src.infrastructure.postgres import Base, engine, Sequence
-from src.app.base import SocialActionExtend, CreateUpdateExtend
+from src.infrastructure.postgres import Base, engine, Sequence, IntegerArray
 
 album_to_track_association = Table(
     "album_to_track_association",
@@ -30,7 +29,7 @@ album_to_tag_association = Table(
 )
 
 
-class Album(BaseAlbumModel, Base, SocialActionExtend, CreateUpdateExtend):
+class Album(BaseAlbumModel, Base):
     __tablename__ = "albums"
 
     id: Mapped[int] = mapped_column(primary_key=True)  # type: ignore[assignment]
@@ -39,6 +38,11 @@ class Album(BaseAlbumModel, Base, SocialActionExtend, CreateUpdateExtend):
     description: Mapped[str | None]  # type: ignore[assignment]
     type: Mapped[Literal['album', 'single']]  # type: ignore[assignment]
 
+    created_at: Mapped[date]
+    updated_at: Mapped[datetime]
+
+    viewers_ids: IntegerArray
+    likers_ids: IntegerArray
 
     artists: Mapped[list["ArtistProfile"]] = relationship(  # type: ignore[name-defined, assignment]  # noqa: F821
         secondary=album_to_artist_association,

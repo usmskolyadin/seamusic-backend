@@ -4,8 +4,7 @@ from sqlalchemy import Table, ForeignKey, Column
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from src.app.auth.producers.models import producer_to_beatpacks_association
-from src.infrastructure.postgres import Base, Sequence
-from src.app.base import SocialActionExtend, CreateUpdateExtend
+from src.infrastructure.postgres import Base, IntegerArray
 
 beatpack_to_beat_association_table = Table(
     "beatpack_to_beat_association_table",
@@ -22,12 +21,18 @@ beatpack_to_tag_association = Table(
 )
 
 
-class Beatpack(Base, SocialActionExtend, CreateUpdateExtend):
+class Beatpack(Base):
     __tablename__ = "beatpacks"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str]
     description: Mapped[str | None]
+
+    viewers_ids: IntegerArray
+    likers_ids: IntegerArray
+
+    created_at: Mapped[date]
+    updated_at: Mapped[datetime]
 
     producers: Mapped[list["ProducerProfile"]] = relationship(  # type: ignore[name-defined]  # noqa: F821
         secondary=producer_to_beatpacks_association,

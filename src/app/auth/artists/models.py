@@ -7,7 +7,6 @@ from src.app.auth.users.models import user_to_artist_association
 from src.app.music.albums.interfaces.da.models import album_to_artist_association
 from src.app.music.squads.models import artist_to_squad_association
 from src.infrastructure.postgres import Base
-from src.app.base import CreateUpdateExtend
 
 artist_to_track_association = Table(
     "artist_to_track_association",
@@ -24,13 +23,16 @@ artist_to_tags_association = Table(
 )
 
 
-class ArtistProfile(Base, CreateUpdateExtend):
+class ArtistProfile(Base):
     __tablename__ = "artist_profiles"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str]
     description: Mapped[str]
     picture_url: Mapped[str]
+
+    created_at: Mapped[date]
+    updated_at: Mapped[datetime]
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     users: Mapped[list["User"]] = relationship(secondary=user_to_artist_association,
