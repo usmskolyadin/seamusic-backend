@@ -4,6 +4,7 @@ from sqlalchemy import Table, ForeignKey, Column
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from src.infrastructure.postgres import Base, Sequence
+from src.app.base import SocialActionExtend, CreateUpdateExtend
 
 playlists_to_beat_association = Table(
     "playlists_to_beat_association",
@@ -34,7 +35,7 @@ author_to_playlists_association = Table(
 )
 
 
-class Playlist(Base):
+class Playlist(Base, SocialActionExtend, CreateUpdateExtend):
     __tablename__ = 'playlists'
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -42,11 +43,7 @@ class Playlist(Base):
     description: Mapped[str | None]
     picture_url: Mapped[str | None]
 
-    created_at: Mapped[date]
-    updated_at: Mapped[datetime]
 
-    viewers_ids: Sequence[int]
-    likers_ids: Sequence[int]
     authors: Mapped[list["User"]] = relationship(secondary=author_to_playlists_association)   # type: ignore[name-defined]  # noqa: F821
     beats: Mapped[list["Beat"]] = relationship(secondary=playlists_to_beat_association)   # type: ignore[name-defined]  # noqa: F821
     tracks: Mapped[list["Track"]] = relationship(secondary=playlists_to_track_association)   # type: ignore[name-defined]  # noqa: F821

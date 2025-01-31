@@ -5,6 +5,7 @@ from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from src.app.auth.producers.models import producer_to_soundkits_association
 from src.infrastructure.postgres import Base, Sequence
+from src.app.base import SocialActionExtend, CreateUpdateExtend
 
 tag_to_soundkits_association = Table(
     "tag_to_soundkits_association",
@@ -22,7 +23,7 @@ beat_to_soundkits_association = Table(
 )
 
 
-class Soundkit(Base):
+class Soundkit(Base, SocialActionExtend, CreateUpdateExtend):
     __tablename__ = "soundkits"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -31,8 +32,6 @@ class Soundkit(Base):
     picture_url: Mapped[str | None]
     file_url: Mapped[str]
 
-    created_at: Mapped[date]
-    updated_at: Mapped[datetime]
 
     viewers_ids: Sequence[int]
     likers_ids: Sequence[int]

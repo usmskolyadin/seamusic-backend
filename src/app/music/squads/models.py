@@ -4,6 +4,7 @@ from sqlalchemy import Table, ForeignKey, Integer, Column
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from src.infrastructure.postgres import Base
+from src.app.base import CreateUpdateExtend
 
 follower_to_squads_association = Table(
     "follower_to_squads_association",
@@ -27,7 +28,7 @@ producer_to_squad_association = Table(
 )
 
 
-class Squad(Base):
+class Squad(Base, CreateUpdateExtend):
     __tablename__ = "squads"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -35,8 +36,6 @@ class Squad(Base):
     description: Mapped[str | None]
     picture_url: Mapped[str | None]
 
-    created_at: Mapped[date]
-    updated_at: Mapped[datetime]
 
     followers: Mapped[list["User"]] = relationship(secondary=follower_to_squads_association)  # type: ignore[name-defined]  # noqa: F821
     artists: Mapped[list["ArtistProfile"]] = relationship(  # type: ignore[name-defined]  # noqa: F821

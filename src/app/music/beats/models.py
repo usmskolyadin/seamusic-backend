@@ -4,6 +4,7 @@ from sqlalchemy import Table, Column, ForeignKey
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from src.infrastructure.postgres import Base, Sequence
+from src.app.base import SocialActionExtend, CreateUpdateExtend
 
 tag_to_beat_association = Table(
     "tag_to_beat_association",
@@ -20,7 +21,7 @@ producer_to_beat_association = Table(
 )
 
 
-class Beat(Base):
+class Beat(Base, SocialActionExtend):
     __tablename__ = "beats"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -29,11 +30,6 @@ class Beat(Base):
     picture_url: Mapped[str | None]
     file_url: Mapped[str]
 
-    created_at: Mapped[date]
-    updated_at: Mapped[datetime]
-
-    viewers_ids: Sequence[int]
-    likers_ids: Sequence[int]
     producers: Mapped[list["ProducerProfile"]] = relationship(  # type: ignore[name-defined]  # noqa: F821
         secondary=producer_to_beat_association,
         back_populates="beats"

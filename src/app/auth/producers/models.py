@@ -7,6 +7,8 @@ from src.app.auth.users.models import user_to_producer_association
 from src.app.music.beats.models import producer_to_beat_association
 from src.app.music.squads.models import producer_to_squad_association
 from src.infrastructure.postgres import Base
+from src.app.base import CreateUpdateExtend
+
 
 producer_to_beatpacks_association = Table(
     "producer_to_beatpacks_association",
@@ -30,16 +32,13 @@ producer_to_tags_association = Table(
 )
 
 
-class ProducerProfile(Base):
+class ProducerProfile(Base, CreateUpdateExtend):
     __tablename__ = "producer_profiles"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str]
     description: Mapped[str]
     picture_url: Mapped[str]
-
-    created_at: Mapped[date]
-    updated_at: Mapped[datetime]
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
 

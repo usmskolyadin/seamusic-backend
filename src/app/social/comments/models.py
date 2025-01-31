@@ -4,6 +4,7 @@ from sqlalchemy import ForeignKey, Integer, Column, Table
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.infrastructure.postgres import Base
+from src.app.base import CreateUpdateExtend
 
 user_to_comments_association = Table(
     "user_to_comments_association",
@@ -13,14 +14,11 @@ user_to_comments_association = Table(
 )
 
 
-class Comment(Base):
+class Comment(Base, CreateUpdateExtend):
     __tablename__ = "comments"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     text: Mapped[str]
     author_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-
-    created_at: Mapped[datetime]
-    updated_at: Mapped[datetime]
 
     author: Mapped["User"] = relationship("User")  # type: ignore[name-defined]  # noqa: F821

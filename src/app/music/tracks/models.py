@@ -4,6 +4,7 @@ from sqlalchemy import Column, ForeignKey, Table
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from src.infrastructure.postgres import Base, Sequence
+from src.app.base import SocialActionExtend, CreateUpdateExtend
 
 track_to_tag_association = Table(
     'track_to_tag_association',
@@ -27,7 +28,7 @@ user_to_tracks_likes = Table(
 )
 
 
-class Track(Base):
+class Track(Base, SocialActionExtend, CreateUpdateExtend):
     __tablename__ = "tracks"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -36,10 +37,6 @@ class Track(Base):
     picture_url: Mapped[str | None]
     file_url: Mapped[str]
 
-    created_at: Mapped[date]
-    updated_at: Mapped[datetime]
 
-    viewers_ids: Sequence[int]
-    likers_ids: Sequence[int]
     producers: Mapped[list["ProducerProfile"]] = relationship(secondary=track_to_producer_association)  # type: ignore[name-defined]  # noqa: F821
     tags: Mapped[list["Tag"]] = relationship(secondary=track_to_tag_association)  # type: ignore[name-defined]  # noqa: F821

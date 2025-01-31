@@ -5,6 +5,7 @@ from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from src.app.music.squads.models import follower_to_squads_association
 from src.infrastructure.postgres import Base
+from src.app.base import CreateUpdateExtend
 
 user_to_licenses_association = Table(
     "user_to_licenses_association",
@@ -49,7 +50,7 @@ user_to_playlists_association = Table(
 )
 
 
-class User(Base):
+class User(Base, CreateUpdateExtend):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -65,9 +66,6 @@ class User(Base):
     is_active: Mapped[bool]
     is_adult: Mapped[bool]
     is_verified: Mapped[bool]
-
-    created_at: Mapped[date]
-    updated_at: Mapped[datetime]
 
     licenses: Mapped[list["License"]] = relationship(secondary=user_to_licenses_association)  # type: ignore[name-defined]  # noqa: F821
     followed_squads: Mapped[list["Squad"]] = relationship(secondary=follower_to_squads_association, back_populates="followers")  # type: ignore[name-defined]  # noqa: F821
