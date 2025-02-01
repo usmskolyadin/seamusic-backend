@@ -1,13 +1,15 @@
-FROM python:3.11.11
+FROM ghcr.io/astral-sh/uv:python3.11-bookworm
 
-COPY . /backend
-WORKDIR /backend
+WORKDIR /app
 
-ENV PYTHONDONTWRITEBYCODE 1
-ENV PYTHONUNBUFFERED 1
+ENV UV_COMPILE_BYTECODE 0
+ENV UV_LINK_MODE=copy
 
-RUN pip install --upgrade pip --root-user-action ignore
-RUN pip install uv --root-user-action ignore
 RUN uv venv --python 3.11.11
+ADD . /app
+
+ENV PATH="/app/.venv/bin:$PATH"
+
+ENTRYPOINT []
 
 CMD ["make", "run-local"]
