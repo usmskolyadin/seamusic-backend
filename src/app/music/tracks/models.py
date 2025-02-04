@@ -3,7 +3,7 @@ from datetime import datetime, date
 from sqlalchemy import Column, ForeignKey, Table
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
-from src.infrastructure.postgres import Base, Sequence, IntegerArray
+from src.infrastructure.postgres import Base, IntegerArray
 
 track_to_tag_association = Table(
     'track_to_tag_association',

@@ -38,7 +38,5 @@ class Beatpack(Base):
         secondary=producer_to_beatpacks_association,
         back_populates="beatpacks"
     )
-    beats: Mapped[list["Beat"]] = relationship(
-        secondary=beatpack_to_beat_association_table)  # type: ignore[name-defined]  # noqa: F821
-    tags: Mapped[list["Tag"]] = relationship(
-        secondary=beatpack_to_tag_association)  # type: ignore[name-defined]  # noqa: F821
+    beats: Mapped[list["Beat"]] = relationship(secondary=beatpack_to_beat_association_table)  # type: ignore[name-defined]  # noqa: F821
+    tags: Mapped[list["Tag"]] = relationship(secondary=beatpack_to_tag_association)  # type: ignore[name-defined]  # noqa: F821

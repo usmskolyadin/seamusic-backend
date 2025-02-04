@@ -2,18 +2,16 @@ from collections.abc import Sequence as _Sequence
 from dataclasses import dataclass
 from typing import Any, Literal, Annotated, Generic, TypeVar
 
-from sqlalchemy import Executable, ARRAY
+from sqlalchemy import Executable
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import DeclarativeBase
 
 from src.infrastructure.config import settings
-from typing import Annotated
 
 from sqlalchemy import ARRAY, String, Integer
 from sqlalchemy.orm import Mapped, mapped_column
 from uuid import UUID
 from sqlalchemy import UUID as AlchemyUUID
-
 
 engine = create_async_engine(url=settings.db_url, echo=settings.echo)
 sessionmaker = async_sessionmaker(bind=engine, expire_on_commit=False)
@@ -31,7 +29,6 @@ class Sequence(Generic[Type], Mapped[Annotated[_Sequence[Type], mapped_column(AR
 StringArray = Mapped[Annotated[list[str], mapped_column(ARRAY(String))]]
 IntegerArray = Mapped[Annotated[list[int], mapped_column(ARRAY(Integer))]]
 UUIDArray = Mapped[Annotated[list[UUID], mapped_column(ARRAY(AlchemyUUID))]]
-
 
 
 @dataclass

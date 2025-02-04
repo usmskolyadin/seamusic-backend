@@ -1,9 +1,7 @@
-from datetime import date, datetime
-
 from sqlalchemy import Table, Column, ForeignKey
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
-from src.infrastructure.postgres import Base, Sequence, IntegerArray
+from src.infrastructure.postgres import Base, IntegerArray
 
 tag_to_beat_association = Table(
     "tag_to_beat_association",
