@@ -4,7 +4,7 @@ from sqlalchemy import Column, Table, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from src.app.auth.producers.models import producer_to_soundkits_association
-from src.infrastructure.postgres import Base, Sequence
+from src.infrastructure.postgres import Base, IntegerArray
 
 tag_to_soundkits_association = Table(
     "tag_to_soundkits_association",
@@ -18,7 +18,6 @@ beat_to_soundkits_association = Table(
     Base.metadata,
     Column("soundkit_id", Integer, ForeignKey("soundkits.id"), primary_key=True),
     Column("beat_id", ForeignKey('beats.id'), primary_key=True)
-
 )
 
 
@@ -31,11 +30,12 @@ class Soundkit(Base):
     picture_url: Mapped[str | None]
     file_url: Mapped[str]
 
+    viewers_ids: IntegerArray
+    likers_ids: IntegerArray
+
     created_at: Mapped[date]
     updated_at: Mapped[datetime]
 
-    viewers_ids: Sequence[int]
-    likers_ids: Sequence[int]
     producers: Mapped[list["ProducerProfile"]] = relationship(  # type: ignore[name-defined]  # noqa: F821
         secondary=producer_to_soundkits_association,
         back_populates="soundkits"

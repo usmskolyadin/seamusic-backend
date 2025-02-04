@@ -36,10 +36,7 @@ class ArtistProfile(Base):
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     users: Mapped[list["User"]] = relationship(secondary=user_to_artist_association, viewonly=True)  # type: ignore[name-defined]  # noqa: F821
-    followers: Mapped[list["User"]] = relationship(  # type: ignore[name-defined]  # noqa: F821
-        secondary=user_to_artist_association,
-        back_populates="followed_artists"
-    )
+    followers: Mapped[list["User"]] = relationship(secondary=user_to_artist_association, back_populates="followed_artists")  # type: ignore[name-defined]  # noqa: F821
     tracks: Mapped[list["Track"]] = relationship(secondary=artist_to_track_association)  # type: ignore[name-defined]  # noqa: F821
     squads: Mapped[list["Squad"]] = relationship(secondary=artist_to_squad_association)  # type: ignore[name-defined]  # noqa: F821
     albums: Mapped[list['Album']] = relationship(secondary=album_to_artist_association)  # type: ignore[name-defined]  # noqa: F821

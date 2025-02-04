@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from sqlalchemy import ForeignKey, Integer, Column, Table
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -20,7 +20,7 @@ class Comment(Base):
     text: Mapped[str]
     author_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
 
-    created_at: Mapped[datetime]
+    created_at: Mapped[date]
     updated_at: Mapped[datetime]
 
     author: Mapped["User"] = relationship("User")  # type: ignore[name-defined]  # noqa: F821

@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     spotify_client_secret: str = Field(default='', alias='SPOTIFY_CLIENT_SECRET')
     spotify_redirect_uri: str = Field(default='', alias='SPOTIFY_REDIRECT_URI')
 
-    db_host: str = Field(default='localhost', alias='DB_HOST')
+    db_host: str = Field(default='192.168.', alias='DB_HOST')
     db_port: int = Field(default=5432, alias='DB_PORT')
     db_name: str = Field(default='postgres', alias='DB_NAME')
     db_user: str = Field(default='postgres', alias='DB_USER')

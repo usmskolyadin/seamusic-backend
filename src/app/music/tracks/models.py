@@ -3,7 +3,7 @@ from datetime import datetime, date
 from sqlalchemy import Column, ForeignKey, Table
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
-from src.infrastructure.postgres import Base, Sequence
+from src.infrastructure.postgres import Base, IntegerArray
 
 track_to_tag_association = Table(
     'track_to_tag_association',
@@ -36,10 +36,11 @@ class Track(Base):
     picture_url: Mapped[str | None]
     file_url: Mapped[str]
 
+    viewers_ids: IntegerArray
+    likers_ids: IntegerArray
+
     created_at: Mapped[date]
     updated_at: Mapped[datetime]
 
-    viewers_ids: Sequence[int]
-    likers_ids: Sequence[int]
     producers: Mapped[list["ProducerProfile"]] = relationship(secondary=track_to_producer_association)  # type: ignore[name-defined]  # noqa: F821
     tags: Mapped[list["Tag"]] = relationship(secondary=track_to_tag_association)  # type: ignore[name-defined]  # noqa: F821

@@ -62,12 +62,12 @@ class User(Base):
     telegram_id: Mapped[int | None]
     premium_level: Mapped[str]
 
+    created_at: Mapped[date]
+    updated_at: Mapped[datetime]
+
     is_active: Mapped[bool]
     is_adult: Mapped[bool]
     is_verified: Mapped[bool]
-
-    created_at: Mapped[date]
-    updated_at: Mapped[datetime]
 
     licenses: Mapped[list["License"]] = relationship(secondary=user_to_licenses_association)  # type: ignore[name-defined]  # noqa: F821
     followed_squads: Mapped[list["Squad"]] = relationship(secondary=follower_to_squads_association, back_populates="followers")  # type: ignore[name-defined]  # noqa: F821
